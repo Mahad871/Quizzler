@@ -48,7 +48,7 @@ class _QuizPageState extends State<QuizPage> {
             child: Center(
               child: Text(
                 _quizBrain.getQuestionText(),
-                //mahad chey
+                //mahad chey haa
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
