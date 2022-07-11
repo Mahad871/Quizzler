@@ -1,8 +1,10 @@
+// ignore_for_file: unnecessary_string_escapes
+
 import 'Questions.dart';
 
 class QuizBrain {
   int _qsNum = 0;
-  List<Question> _qsList = [
+  final List<Question> _qsList = [
     Question('Some cats are actually allergic to humans', true),
     Question('You can lead a cow down stairs but not up stairs.', false),
     Question('Approximately one quarter of human bones are in the feet.', true),
@@ -29,6 +31,13 @@ class QuizBrain {
         'In West Virginia, USA, if you accidentally hit an animal with your car, you are free to take it home to eat.',
         true),
   ];
+
+  bool endOfQs() {
+    if (_qsNum == _qsList.length - 1) {
+      return true;
+    }
+    return false;
+  }
 
   void nextQuestion() {
     if (_qsNum < _qsList.length - 1) {

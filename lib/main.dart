@@ -35,6 +35,27 @@ class _QuizPageState extends State<QuizPage> {
   var qn = 0;
   QuizBrain _quizBrain = QuizBrain();
 
+  void ansCheck(bool ans) {
+    if (_quizBrain.endOfQs() == false) {
+      if (_quizBrain.getQuestionAnswer() == ans) {
+        ansicon.add(
+          Icon(
+            Icons.check,
+            color: Colors.green,
+          ),
+        );
+      } else {
+        ansicon.add(
+          Icon(
+            Icons.close,
+            color: Colors.red,
+          ),
+        );
+      }
+    }
+    _quizBrain.nextQuestion();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -48,7 +69,6 @@ class _QuizPageState extends State<QuizPage> {
             child: Center(
               child: Text(
                 _quizBrain.getQuestionText(),
-                //mahad chey nhi haa
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -74,25 +94,7 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 setState(() {
-                  if (qn < 12) {
-                    if (_quizBrain.getQuestionAnswer() == true) {
-                      ansicon.add(
-                        Icon(
-                          Icons.check,
-                          color: Colors.green,
-                        ),
-                      );
-                    } else {
-                      ansicon.add(
-                        Icon(
-                          Icons.close,
-                          color: Colors.red,
-                        ),
-                      );
-                    }
-
-                    _quizBrain.nextQuestion();
-                  }
+                  ansCheck(true);
                 });
               },
             ),
@@ -112,24 +114,7 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 setState(() {
-                  if (qn < 12) {
-                    if (_quizBrain.getQuestionAnswer() == false) {
-                      ansicon.add(
-                        Icon(
-                          Icons.check,
-                          color: Colors.green,
-                        ),
-                      );
-                    } else {
-                      ansicon.add(
-                        Icon(
-                          Icons.close,
-                          color: Colors.red,
-                        ),
-                      );
-                    }
-                    _quizBrain.nextQuestion();
-                  }
+                  ansCheck(false);
                 });
               },
             ),
