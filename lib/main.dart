@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'quiz_brain.dart';
 
 void main() => runApp(Quizzler());
@@ -36,24 +37,50 @@ class _QuizPageState extends State<QuizPage> {
   QuizBrain _quizBrain = QuizBrain();
 
   void ansCheck(bool ans) {
-    if (_quizBrain.endOfQs() == false) {
-      if (_quizBrain.getQuestionAnswer() == ans) {
-        ansicon.add(
-          Icon(
-            Icons.check,
-            color: Colors.green,
-          ),
-        );
+    setState(() {
+      if (_quizBrain.endOfQs() == false) {
+        if (_quizBrain.getQuestionAnswer() == ans) {
+          ansicon.add(
+            Icon(
+              Icons.check,
+              color: Colors.green,
+            ),
+          );
+        } else {
+          ansicon.add(
+            Icon(
+              Icons.close,
+              color: Colors.red,
+            ),
+          );
+        }
+        _quizBrain.nextQuestion();
       } else {
-        ansicon.add(
-          Icon(
-            Icons.close,
-            color: Colors.red,
-          ),
-        );
+        Alert(
+          context: context,
+          type: AlertType.success,
+          title: "Quiz Completed",
+          desc: "YAYY! You have Completed the Quiz.",
+          buttons: [
+            DialogButton(
+              child: Text(
+                "Try Again :)",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () {
+                setState(() {
+                  ansicon = [];
+                  _quizBrain = QuizBrain();
+                });
+                Navigator.pop(context);
+              },
+              color: Colors.cyan,
+              width: 120,
+            )
+          ],
+        ).show();
       }
-    }
-    _quizBrain.nextQuestion();
+    });
   }
 
   @override
@@ -113,9 +140,7 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                setState(() {
-                  ansCheck(false);
-                });
+                ansCheck(false);
               },
             ),
           ),
